@@ -4,28 +4,91 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] float minX;
-    [SerializeField] float maxX;
-    [SerializeField] float minY;
-    [SerializeField] float maxY;
-    [SerializeField] float minZ;
-    [SerializeField] float maxZ;
-    [SerializeField] float zoomMin;
-    [SerializeField] float zoomMax;
-    [SerializeField] float movementSpeed;
+    public Camera camera;
+    public bool rotate;
+    protected Plane plane;
 
-    // Update is called once per frame
-    void Update()
+    private void Awake()
     {
-        if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
-        {
-            Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;
-            transform.Translate(-touchDeltaPosition.x * movementSpeed, 0, -touchDeltaPosition.y * movementSpeed);
+        if (camera == null)
+            camera = Camera.main;
+    }
 
-            transform.position = new Vector3(
-                Mathf.Clamp(transform.position.x, minX, maxX),
-                5,
-                Mathf.Clamp(transform.position.z, minZ, maxZ));
+    private void Update()
+    {
+
+        //Update Plane
+        if (Input.touchCount >= 1)
+            plane.SetNormalAndPosition(transform.up, transform.position);
+
+        var Delta1 = Vector3.zero;
+        var Delta2 = Vector3.zero;
+
+
+        //Scroll
+        if (Input.touchCount >= 1)
+        {
+            Delta1 = PlanePositionDelta(Input.GetTouch(0));
+
+            if (Input.GetTouch(0).phase == TouchPhase.Moved)
+            {
+                camera.transform.Translate(Delta1, Space.World);
+            }
+
         }
+
+        //Pinch
+        if (Input.touchCount >= 2)
+        {
+            var pos1 = PlanePosition(Input.GetTouch(0).position);
+            var pos2 = PlanePosition(Input.GetTouch(1).position);
+            var pos1b = PlanePosition(Input.GetTouch(0).position - Input.GetTouch(0).deltaPosition);
+            var pos2b = PlanePosition(Input.GetTouch(1).position - Input.GetTouch(1).deltaPosition);
+
+            //calc zoom
+            var zoom = Vector3.Distance(pos1, pos2) /
+                       Vector3.Distance(pos1b, pos2b);
+
+            //edge case
+            if (zoom == 0 || zoom > 10)
+                return;
+
+
+            camera.transform.position = Vector3.LerpUnclamped(pos1, camera.transform.position, 1 / zoom);
+            if (rotate && pos2b != pos2)
+                camera.transform.RotateAround(pos1, plane.normal, Vector3.SignedAngle(pos2 - pos1, pos2b - pos1b, plane.normal));
+        }
+
+    }
+
+    protected Vector3 PlanePositionDelta(Touch touch)
+    {
+        //not moved
+        if (touch.phase != TouchPhase.Moved)
+            return Vector3.zero;
+
+        //delta
+        var rayBefore = camera.ScreenPointToRay(touch.position - touch.deltaPosition);
+        var rayNow = camera.ScreenPointToRay(touch.position);
+        if (plane.Raycast(rayBefore, out var enterBefore) && plane.Raycast(rayNow, out var enterNow))
+            return rayBefore.GetPoint(enterBefore) - rayNow.GetPoint(enterNow);
+
+        //not on plane
+        return Vector3.zero;
+    }
+
+    protected Vector3 PlanePosition(Vector2 screenPos)
+    {
+        //position
+        var rayNow = camera.ScreenPointToRay(screenPos);
+        if (plane.Raycast(rayNow, out var enterNow))
+            return rayNow.GetPoint(enterNow);
+
+        return Vector3.zero;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawLine(transform.position, transform.position + transform.up);
     }
 }
