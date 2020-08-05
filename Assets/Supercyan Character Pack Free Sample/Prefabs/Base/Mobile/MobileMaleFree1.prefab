@@ -150,7 +150,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1091654751759414}
-  m_LocalRotation: {x: -0.6087614, y: -0.0002435872, z: 0.7933532, w: -0.0003151176}
+  m_LocalRotation: {x: -0.6087614, y: -0.00024358722, z: 0.7933532, w: -0.00031511762}
   m_LocalPosition: {x: -0.009793099, y: -0.0032242318, z: 0.003381915}
   m_LocalScale: {x: 1, y: 1, z: 0.99999994}
   m_Children:
@@ -199,6 +199,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4749730850939948}
   - component: {fileID: 95879256730774250}
+  - component: {fileID: 145686468}
   m_Layer: 0
   m_Name: MobileMaleFree1
   m_TagString: Untagged
@@ -213,7 +214,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1144978573833690}
-  m_LocalRotation: {x: -0, y: -0.9886551, z: -0, w: 0.15020359}
+  m_LocalRotation: {x: 0, y: -0.9886557, z: 0, w: 0.15019979}
   m_LocalPosition: {x: 0.668911, y: -5.153639e-19, z: 1.8567942}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -232,17 +233,33 @@ Animator:
   m_GameObject: {fileID: 1144978573833690}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 45d480461bbdc704587e117329ce8e69, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8b9a677f24793ba45bdc27a1dab7745e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
-  m_WarningMessage: '
-
-    Transform ''basic_rig Head'' has been deleted'
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &145686468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1144978573833690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74328896ffc0a514b89101c136f35350, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minX: -10
+  maxX: 10
+  minZ: -10
+  maxZ: 10
+  moveSpeed: 1
+  startWaitTime: 3
 --- !u!1 &1157946496253678
 GameObject:
   m_ObjectHideFlags: 0
