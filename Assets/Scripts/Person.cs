@@ -53,7 +53,7 @@ public class Person : MonoBehaviour
     {
         if(isInfected && immunity > 0)
         {
-            immunity -= 0.01f;
+            immunity -= 0.001f;
             immunityBar.GetComponent<Slider>().value = immunity;
         }
     }
@@ -64,7 +64,7 @@ public class Person : MonoBehaviour
         {
             immunityBar.SetActive(false);
             healthBar.SetActive(true);
-            health -= 0.01f;
+            health -= 0.001f;
             healthBar.GetComponent<Slider>().value = health;
             if (health < 0)
                 Destroy(gameObject);
@@ -80,6 +80,7 @@ public class Person : MonoBehaviour
         else
         {
             immunityBar.SetActive(false);
+            healthBar.SetActive(false);
         }
     }
 
