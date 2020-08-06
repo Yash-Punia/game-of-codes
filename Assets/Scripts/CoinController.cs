@@ -4,32 +4,103 @@ using UnityEngine;
 
 public class CoinController : MonoBehaviour
 {
-    private int coins;
+    [SerializeField] float houseProductionInterval;
+    [SerializeField] GameObject coinPrefab;
 
+    private float timer;
+    private int houseProductionAmount;
+
+    public int totalCoins { get; set; }
+    
     // Start is called before the first frame update
     void Start()
     {
-        coins = 300;
+        timer = houseProductionInterval;
+        totalCoins = 300;
+        houseProductionAmount = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //coinText.SetText(coins.ToString());
+        //Displyaing coinText UI
+        Debug.Log(totalCoins);
+
+        //House money production
+        HouseProductionHandler();
+
+        //Office money production/collection
+        OfficeProductionHandler();
+
+        //House money collection
+        HouseProductionCollectionHandler();
     }
 
     public void IncreaseCoins(int amount)
     {
-        coins += amount;
+        totalCoins += amount;
     }
 
     public void DecreaseCoins(int amount)
     {
-        coins -= amount;
+        totalCoins -= amount;
     }
 
-    public int GetCoins()
+    private void HouseProductionHandler()
     {
-        return coins;
+        int currentPopulation = GetComponent<PopulationController>().currentPopulation;
+        if(currentPopulation > 0)
+        {
+            if(timer < 0)
+            {
+                houseProductionAmount += currentPopulation;
+                timer = houseProductionInterval;
+            }
+            else
+            {
+                timer -= Time.deltaTime;
+            }
+        }
+    }
+
+    private void HouseProductionCollectionHandler()
+    {
+        if(houseProductionAmount > 0)
+        {
+            coinPrefab.SetActive(true);
+            if(Input.touchCount>0)
+            {
+                Touch touch = Input.GetTouch(0);
+                Ray rayFromTouch = Camera.main.ScreenPointToRay(touch.position);
+                if(Physics.Raycast(rayFromTouch, out var hit))
+                {
+                    if(hit.collider.CompareTag("House"))
+                    {
+                        IncreaseCoins(houseProductionAmount);
+                        houseProductionAmount = 0;
+                    }
+                }
+            }
+        }
+        else
+        {
+            coinPrefab.SetActive(false);
+        }
+    }
+
+    private void OfficeProductionHandler()
+    {
+        if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Began)
+        {
+            Touch touch = Input.GetTouch(0);
+            Ray rayFromTouch = Camera.main.ScreenPointToRay(touch.position);
+            if (Physics.Raycast(rayFromTouch, out var hit))
+            {
+                if (hit.collider.CompareTag("Office"))
+                {
+                    IncreaseCoins(GetComponent<PopulationController>().currentPopulation);
+                }
+            }
+        }
     }
 }

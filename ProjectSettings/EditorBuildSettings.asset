@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/Main.unity
-    guid: 9c5ea496828a7e845bb29b24f53d0725
+  - enabled: 1
+    path: Assets/Scenes/Yash.unity
+    guid: c659be7ef5977af45be4967b5e80960b
   m_configObjects: {}
