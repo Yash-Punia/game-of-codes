@@ -5,7 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Yash.unity
     guid: c659be7ef5977af45be4967b5e80960b
+  - enabled: 1
+    path: Assets/Scenes/Vaibhav.unity
+    guid: 6395dfda0a3719c4b895df3904cbf838
   m_configObjects: {}

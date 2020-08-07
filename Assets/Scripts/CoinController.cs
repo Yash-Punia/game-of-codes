@@ -24,7 +24,7 @@ public class CoinController : MonoBehaviour
     void Update()
     {
         //Displyaing coinText UI
-        Debug.Log(totalCoins);
+        //Debug.Log(totalCoins);
 
         //House money production
         HouseProductionHandler();

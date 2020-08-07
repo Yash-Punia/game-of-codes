@@ -4,10 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - PowerUp
   - Person
-  - House
   - Office
   - QuarantineCenter
+  - House
+  - draggingTag
   layers:
   - Default
   - TransparentFX
