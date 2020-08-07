@@ -139,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6344658
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1965,7 +1965,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 552172666}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2020997553}
+        m_MethodName: SelfQuarantine
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &552172666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2298,7 +2309,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 610878642}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2020997553}
+        m_MethodName: LockdownPowerUp
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &610878642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2521,7 +2543,7 @@ GameObject:
   - component: {fileID: 646432361}
   m_Layer: 0
   m_Name: Coin
-  m_TagString: Untagged
+  m_TagString: HouseCoin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2624,7 +2646,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &649692631
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2805,7 +2827,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 679576784}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2020997553}
+        m_MethodName: MaskPowerUp
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &679576784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2921,13 +2954,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 698349972}
-  m_LocalRotation: {x: 0.5735764, y: 0, z: 0, w: 0.8191521}
+  m_LocalRotation: {x: 0.67559016, y: 0, z: 0, w: 0.7372774}
   m_LocalPosition: {x: 0, y: 20, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 70, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 85, y: 0, z: 0}
 --- !u!114 &698349976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4071,7 +4104,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2020997553}
         m_MethodName: ImmunityDrink
         m_Mode: 1
         m_Arguments:
@@ -4583,7 +4616,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2020997553}
         m_MethodName: HealthBooster
         m_Mode: 1
         m_Arguments:
@@ -6165,7 +6198,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1815609061}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2020997553}
+        m_MethodName: SanatizerArea
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1815609061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6387,6 +6431,7 @@ GameObject:
   - component: {fileID: 2020997551}
   - component: {fileID: 2020997552}
   - component: {fileID: 2020997553}
+  - component: {fileID: 2020997554}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -6459,6 +6504,8 @@ MonoBehaviour:
   houseCanvas: {fileID: 143804006}
   houseProductionText: {fileID: 143804005}
   houseUpgradationText: {fileID: 143804007}
+  upgradeSfx: {fileID: 8300000, guid: d0ee9f4bcdabde142b793e1879b37369, type: 3}
+  coinSfx: {fileID: 8300000, guid: cf2c46342c9e9614ca64432e06eb4473, type: 3}
 --- !u!114 &2020997553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6478,8 +6525,113 @@ MonoBehaviour:
   immunityDrink: {fileID: 2987765121075270611, guid: 42502f10dc2e8ee4abb00b6723cda503,
     type: 3}
   immunityDrinkCost: 20
-  lockDownPowerUp: {fileID: 0}
   lockdownPowerUpCost: 20
+  maskPowerUp: {fileID: 2987765121075270611, guid: 3e7bd525c93577e42ac514825238f8a2,
+    type: 3}
+  MaskCost: 20
+  selfQuarantine: {fileID: 2987765121075270611, guid: f1a2148666bf72a4f97b93180d8d2d6f,
+    type: 3}
+  selfQuarantineCost: 20
+  sanatizer: {fileID: 2987765121075270611, guid: b95b87940778c8a4595346dc2ae7c004,
+    type: 3}
+  sanatizeCost: 20
+  buttonSelect: {fileID: 8300000, guid: b03484e4f958586459e26647f58f26c6, type: 3}
+--- !u!82 &2020997554
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2020997548}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 0.8
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &2052832117
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6702,7 +6854,7 @@ GameObject:
   - component: {fileID: 2534866581363600557}
   m_Layer: 0
   m_Name: CoinHolderHouse
-  m_TagString: House
+  m_TagString: HouseCoin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

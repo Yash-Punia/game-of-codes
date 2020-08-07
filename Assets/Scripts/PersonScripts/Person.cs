@@ -6,12 +6,11 @@ using UnityEngine.UI;
 public class Person : MonoBehaviour
 {
     public float moveSpeed;
-    [SerializeField] float startWaitTime;
     [SerializeField] float health = 100;
     [SerializeField] float immunity = 100;
     [SerializeField] float healthDecreaseRate = 0.5f;
     [SerializeField] float immunityDecreaseRate = 0.5f;
-
+    [SerializeField] AudioClip deathSfx;
     [SerializeField] GameObject healthBar;
     [SerializeField] GameObject immunityBar;
     public bool isInfected;
@@ -24,6 +23,8 @@ public class Person : MonoBehaviour
     private float minZ;
     private float maxZ;
     private bool rotationCalculated;
+    private AudioSource source;
+    private float startWaitTime;
 
     [SerializeField] GameObject infectionForeField;
     [SerializeField] GameObject powerUpUseForceField;
@@ -34,7 +35,7 @@ public class Person : MonoBehaviour
 
     void Start()
     {
-        moveSpot = new Vector3(Random.Range(minX, maxX), transform.position.y, Random.Range(minZ, maxZ));
+        source = GetComponent<AudioSource>();
         anim = GetComponent<Animator>();
         waitTime = startWaitTime;
         rotationCalculated = false;
@@ -47,6 +48,8 @@ public class Person : MonoBehaviour
         maxX = 10f;
         minZ = -10f;
         maxZ = 10f;
+        startWaitTime = Random.Range(1, 5);
+        moveSpot = new Vector3(Random.Range(minX, maxX), transform.position.y, Random.Range(minZ, maxZ));
 
         if (isInfected)
         {
@@ -84,7 +87,11 @@ public class Person : MonoBehaviour
             health -= healthDecreaseRate*Time.deltaTime;
             healthBar.GetComponent<Slider>().value = health;
             if (health < 0)
+            {
+                source.clip = deathSfx;
+                source.Play();
                 Destroy(gameObject);
+            }
         }
     }
 

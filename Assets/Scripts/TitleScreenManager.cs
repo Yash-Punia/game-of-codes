@@ -9,6 +9,15 @@ public class TitleScreenManager : MonoBehaviour
     [SerializeField] GameObject cameraRig;
     [SerializeField] Image transitionPanel;
     [SerializeField] float rotationSpeed;
+    [SerializeField] AudioClip playSfx;
+
+    private AudioSource source;
+
+    private void Start()
+    {
+        source = GetComponent<AudioSource>();
+        Time.timeScale = 1;
+    }
 
     // Update is called once per frame
     void Update()
@@ -27,6 +36,8 @@ public class TitleScreenManager : MonoBehaviour
 
     IEnumerator LoadPlayScene()
     {
+        source.clip = playSfx;
+        source.Play();
         transitionPanel.GetComponent<Animator>().SetBool("NextScene",true);
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene("Yash");

@@ -14,18 +14,22 @@ public class CoinController : MonoBehaviour
     [SerializeField] GameObject houseCanvas;
     [SerializeField] TextMeshProUGUI houseProductionText;
     [SerializeField] TextMeshProUGUI houseUpgradationText;
+    [SerializeField] AudioClip upgradeSfx;
+    [SerializeField] AudioClip coinSfx;
 
     private float timer;
     private int houseProductionAmount;
     private int houseProductionBoost;
     private int houseUpgradationCost = 10;
     private bool officeUnlocked = false;
+    private AudioSource source;
 
     public int totalCoins { get; set; }
     
     // Start is called before the first frame update
     void Start()
     {
+        source = GetComponent<AudioSource>();
         timer = houseProductionInterval;
         totalCoins = 300;
         houseProductionAmount = 0;
@@ -52,6 +56,8 @@ public class CoinController : MonoBehaviour
 
     public void IncreaseCoins(int amount)
     {
+        source.clip = coinSfx;
+        source.Play();
         totalCoins += amount;
     }
 
@@ -88,12 +94,15 @@ public class CoinController : MonoBehaviour
                 Ray rayFromTouch = Camera.main.ScreenPointToRay(touch.position);
                 if(Physics.Raycast(rayFromTouch, out var hit))
                 {
-                    if(hit.collider.CompareTag("House"))
+                    if(hit.collider.CompareTag("HouseCoin"))
                     {
-                        houseCanvas.SetActive(true);
                         house.GetComponent<Animator>().SetTrigger("Tapped");
                         IncreaseCoins(houseProductionAmount * houseProductionBoost);
                         houseProductionAmount = 0;
+                    }
+                    if(hit.collider.CompareTag("House"))
+                    {
+                        houseCanvas.SetActive(true);
                     }
                 }
             }
@@ -148,6 +157,8 @@ public class CoinController : MonoBehaviour
     {
         if(totalCoins > houseUpgradationCost)
         {
+            source.clip = upgradeSfx;
+            source.Play();
             houseProductionBoost++;
             DecreaseCoins(houseUpgradationCost);
             houseUpgradationCost += houseUpgradationCost;

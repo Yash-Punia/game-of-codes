@@ -32,15 +32,20 @@ public class PowerUpButton : MonoBehaviour
     [SerializeField] GameObject sanatizer;
     [SerializeField] int sanatizeCost = 20;
 
+    [SerializeField] AudioClip buttonSelect;
+    
     CoinController coinController;
+    private AudioSource source;
 
     private void Start()
     {
+        source = GetComponent<AudioSource>();
         coinController = FindObjectOfType<CoinController>();
     }
 
     public void ImmunityDrink()
     {
+        PlayButtonSound();
         FindObjectOfType<CameraController>().isPanning = false;
         if (coinController.totalCoins >= immunityDrinkCost)
         {
@@ -51,6 +56,7 @@ public class PowerUpButton : MonoBehaviour
     }
     public void HealthBooster()
     {
+        PlayButtonSound();
         FindObjectOfType<CameraController>().isPanning = false;
         if (coinController.totalCoins >= healthBoosterCost)
         {
@@ -62,6 +68,7 @@ public class PowerUpButton : MonoBehaviour
 
     public void MaskPowerUp()
     {
+        PlayButtonSound();
         FindObjectOfType<CameraController>().isPanning = false;
         if (coinController.totalCoins >= MaskCost)
         {
@@ -73,10 +80,10 @@ public class PowerUpButton : MonoBehaviour
 
     public void PersonPowerUp()
     {
+        PlayButtonSound();
         FindObjectOfType<CameraController>().isPanning = false;
         if (coinController.totalCoins >= personCost)
         {
-            Vector3 positionOfClick = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             GetComponent<PopulationController>().AddPerson();
             coinController.DecreaseCoins(personCost);
         }
@@ -85,6 +92,7 @@ public class PowerUpButton : MonoBehaviour
 
      public void LockdownPowerUp()
     {
+        PlayButtonSound();
         FindObjectOfType<CameraController>().isPanning = false;
         if (coinController.totalCoins >= lockdownPowerUpCost)
         {
@@ -110,7 +118,7 @@ public class PowerUpButton : MonoBehaviour
 
     public void SelfQuarantine()
     {
-
+        PlayButtonSound();
         FindObjectOfType<CameraController>().isPanning = false;
         if (coinController.totalCoins >= selfQuarantineCost)
         {
@@ -122,6 +130,7 @@ public class PowerUpButton : MonoBehaviour
 
     public void SanatizerArea()
     {
+        PlayButtonSound();
         FindObjectOfType<CameraController>().isPanning = false;
         if (coinController.totalCoins >= sanatizeCost)
         {
@@ -131,4 +140,9 @@ public class PowerUpButton : MonoBehaviour
         }
     }
 
+    private void PlayButtonSound()
+    {
+        source.clip = buttonSelect;
+        source.Play();
+    }
 }

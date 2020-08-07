@@ -51,6 +51,7 @@ public class ImmunityDrink : MonoBehaviour
                 {
                     yield return new WaitForSeconds(0.5f);
                     infectedPerson.GetComponent<Person>().disablePowerUpForceField();
+                    infectedPerson.GetComponent<Person>().enableInfectionForceField();
                     //
                     // Write Code for the actual impact of power up
                     infectedPerson.GetComponent<Person>().SetImmunity(immunityIncreaseValue);

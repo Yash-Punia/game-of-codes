@@ -13,23 +13,25 @@ public class QuarantineCenterManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI currentOccupiedBedsText;
     [SerializeField] TextMeshProUGUI treatmentSliderText;
     [SerializeField] GameObject treatmentSlider;
+    [SerializeField] AudioClip upgradeSfx;
 
     private int totalBeds;
     private int currentOccupiedBeds;
     private int upgradeCost;
     private float timer;
     private float treatmentTime;
-
+    private AudioSource source;
 
     // Start is called before the first frame update
     void Start()
     {
+        source = GetComponent<AudioSource>();
         statsCanvas.GetComponent<CanvasGroup>().alpha = 0;
         statsCanvas.GetComponent<CanvasGroup>().interactable = false;
         treatmentSlider.SetActive(false);
         totalBeds = 1;
         currentOccupiedBeds = 0;
-        upgradeCost = 10;
+        upgradeCost = 100;
         treatmentTime = 30f;
         timer = treatmentTime;
     }
@@ -78,6 +80,8 @@ public class QuarantineCenterManager : MonoBehaviour
     {
         if(gameManager.GetComponent<CoinController>().totalCoins > upgradeCost)
         {
+            source.clip = upgradeSfx;
+            source.Play();
             totalBeds++;
             gameManager.GetComponent<CoinController>().DecreaseCoins(upgradeCost);
             upgradeCost += upgradeCost;
