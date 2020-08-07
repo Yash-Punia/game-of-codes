@@ -1,17 +1,17 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class PowerUpMovement : MonoBehaviour
+public class ImmunityDrink : MonoBehaviour
 {
     bool moveAllowed = false;
     public Camera cam;
     private float speedModifier = 0.05f;
     private LineRenderer laserLine;
 
-    [SerializeField] float maxTime = 10f;
-
     //
     //Power up variables
+    float immunityIncreaseValue = 10f;
+    [SerializeField] float valueToBeUpdate = 5f;
     //
 
     private void Start()
@@ -19,13 +19,6 @@ public class PowerUpMovement : MonoBehaviour
         laserLine = GetComponent<LineRenderer>();
         FindObjectOfType<CameraController>().isPanning = false;
         laserLine.enabled = false;
-        StartCoroutine(PowerUpTimeHandler());
-    }
-
-    IEnumerator PowerUpTimeHandler()
-    {
-        yield return new WaitForSeconds(maxTime);
-        Destroy(gameObject);
     }
     private void Update()
     {
@@ -60,6 +53,7 @@ public class PowerUpMovement : MonoBehaviour
                     infectedPerson.GetComponent<Person>().disablePowerUpForceField();
                     //
                     // Write Code for the actual impact of power up
+                    infectedPerson.GetComponent<Person>().SetImmunity(immunityIncreaseValue);
                     //
                     laserLine.enabled = false;
                     FindObjectOfType<CameraController>().isPanning = true;
@@ -79,6 +73,12 @@ public class PowerUpMovement : MonoBehaviour
                         }      
                 }
         }
+    }
+
+    public void UpdateImmunityDrink()
+    {
+        if(immunityIncreaseValue <= 95f)
+            immunityIncreaseValue += valueToBeUpdate;
     }
 }
    

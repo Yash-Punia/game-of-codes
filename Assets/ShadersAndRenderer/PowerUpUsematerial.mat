@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: PowerUpUsematerial
+  m_Shader: {fileID: -6465566751694194690, guid: 2ca55fe7752b5f644b249ddac16d2d0f,
+    type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 2
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_7F069466:
+        m_Texture: {fileID: 2800000, guid: b0e95b5af92e94f42a44f1a3a3675fb0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Vector1_3FE18D93: 0.16
+    - Vector1_C00EFAB7: 1
+    - Vector1_C72C37F0: 0.05
+    - Vector1_DC54BFEF: 0.1
+    m_Colors:
+    - Color_CADC58D4: {r: 3.774431, g: 2.6013825, b: 0.017803963, a: 0}

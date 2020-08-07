@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PopulationController : MonoBehaviour
 {
@@ -16,22 +17,33 @@ public class PopulationController : MonoBehaviour
     {
         currentPopulation = 0;
         people = new List<GameObject>();
-        AddPerson();
-        AddPerson();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+    
 
     public void AddPerson()
     {
         spawnPoint = new Vector3(Random.Range(-10f, 10f), 0f, Random.Range(-10f, 10f));
         GameObject tempPerson = Instantiate(personPrefab, spawnPoint, Quaternion.identity);
         tempPerson.GetComponent<Person>().personIndex = currentPopulation;
-        currentPopulation++;
         people.Add(tempPerson);
     }
+
+    public void LockDownEffect()
+    {
+        for(int i =0; i < currentPopulation; i++)
+        {
+            StartCoroutine(LockDown());
+            IEnumerator LockDown()
+            {
+                people[i].GetComponent<Person>().isMovementAllowed = false;
+                yield return new WaitForSeconds(10f);
+                people[i].GetComponent<Person>().isMovementAllowed = true;
+            }
+        }
+        
+    }
+    
+
+
 }

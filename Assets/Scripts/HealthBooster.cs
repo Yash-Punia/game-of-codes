@@ -1,18 +1,20 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
 
-public class PowerUpMovement : MonoBehaviour
+public class HealthBooster : MonoBehaviour
 {
     bool moveAllowed = false;
     public Camera cam;
     private float speedModifier = 0.05f;
     private LineRenderer laserLine;
 
-    [SerializeField] float maxTime = 10f;
-
     //
     //Power up variables
+    float healthIncreaseValue = 10f;
+    [SerializeField] float valueToBeUpdate = 5f;
     //
+    [SerializeField] float maxTime = 10f;
 
     private void Start()
     {
@@ -25,8 +27,10 @@ public class PowerUpMovement : MonoBehaviour
     IEnumerator PowerUpTimeHandler()
     {
         yield return new WaitForSeconds(maxTime);
+        FindObjectOfType<CameraController>().isPanning = true;
         Destroy(gameObject);
     }
+
     private void Update()
     {
         if (Input.touchCount == 1)
@@ -58,8 +62,10 @@ public class PowerUpMovement : MonoBehaviour
                 {
                     yield return new WaitForSeconds(0.5f);
                     infectedPerson.GetComponent<Person>().disablePowerUpForceField();
+                    infectedPerson.GetComponent<Person>().enableInfectionForceField();
                     //
                     // Write Code for the actual impact of power up
+                    infectedPerson.GetComponent<Person>().SetHealth(healthIncreaseValue);
                     //
                     laserLine.enabled = false;
                     FindObjectOfType<CameraController>().isPanning = true;
@@ -79,6 +85,12 @@ public class PowerUpMovement : MonoBehaviour
                         }      
                 }
         }
+    }
+
+    public void UpdateHealthBooster()
+    {
+        if(healthIncreaseValue <= 95f)
+            healthIncreaseValue += valueToBeUpdate;
     }
 }
    
