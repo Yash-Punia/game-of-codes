@@ -7,8 +7,6 @@ public class Person : MonoBehaviour
 {
     [SerializeField] float moveSpeed;
     [SerializeField] float startWaitTime;
-    [SerializeField] float health;
-    [SerializeField] float immunity;
     [SerializeField] GameObject healthBar;
     [SerializeField] GameObject immunityBar;
     [SerializeField] bool isInfected;
@@ -22,7 +20,8 @@ public class Person : MonoBehaviour
     private float maxZ;
     private bool rotationCalculated;
 
-    public int personIndex { get; set; }
+    public float health { get; set; }
+    public float immunity { get; set; }
 
     void Start()
     {
@@ -39,6 +38,8 @@ public class Person : MonoBehaviour
         maxX = 10f;
         minZ = -10f;
         maxZ = 10f;
+        health = 10f;
+        immunity = 10f;
     }
 
     void Update()

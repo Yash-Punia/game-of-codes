@@ -7,6 +7,7 @@ TagManager:
   - Person
   - House
   - Office
+  - QuarantineCenter
   layers:
   - Default
   - TransparentFX
