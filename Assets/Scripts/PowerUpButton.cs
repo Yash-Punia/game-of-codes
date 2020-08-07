@@ -16,8 +16,21 @@ public class PowerUpButton : MonoBehaviour
     [SerializeField] int immunityDrinkCost = 20;
 
 
-    [SerializeField] GameObject lockDownPowerUp;
+    // Lockdown doesn't need a gameObject Prefab
+    // Need to make a particle effect
     [SerializeField] int lockdownPowerUpCost = 20;
+
+
+    [SerializeField] GameObject maskPowerUp;
+    [SerializeField] int MaskCost = 20;
+
+
+    [SerializeField] GameObject selfQuarantine;
+    [SerializeField] int selfQuarantineCost = 20;
+
+
+    [SerializeField] GameObject sanatizer;
+    [SerializeField] int sanatizeCost = 20;
 
     CoinController coinController;
 
@@ -47,6 +60,17 @@ public class PowerUpButton : MonoBehaviour
         }
     }
 
+    public void MaskPowerUp()
+    {
+        FindObjectOfType<CameraController>().isPanning = false;
+        if (coinController.totalCoins >= MaskCost)
+        {
+            Vector3 positionOfClick = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            var newPower = Instantiate(maskPowerUp, positionOfClick - new Vector3(0, 2, 0), Quaternion.identity);
+            coinController.DecreaseCoins(MaskCost);
+        }
+    }
+
     public void PersonPowerUp()
     {
         FindObjectOfType<CameraController>().isPanning = false;
@@ -65,10 +89,46 @@ public class PowerUpButton : MonoBehaviour
         if (coinController.totalCoins >= lockdownPowerUpCost)
         {
             Vector3 positionOfClick = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            GetComponent<PopulationController>().LockDownEffect();
+            Person[] allPerson = FindObjectsOfType<Person>();
+            foreach(Person person in allPerson)
+            {
+                StartCoroutine(LockDown());
+                IEnumerator LockDown()
+                {
+                    person.GetComponent<Person>().isMovementAllowed = false;
+                    person.GetComponent<Person>().anim.SetBool("Walking", false);
+                    yield return new WaitForSeconds(10f);
+                    person.GetComponent<Person>().isMovementAllowed = true;
+                    person.GetComponent<Person>().anim.SetBool("Walking", true);
+                }
+            }
             coinController.DecreaseCoins(lockdownPowerUpCost);
         }
         
         FindObjectOfType<CameraController>().isPanning = true;
+     }
+
+    public void SelfQuarantine()
+    {
+
+        FindObjectOfType<CameraController>().isPanning = false;
+        if (coinController.totalCoins >= selfQuarantineCost)
+        {
+            Vector3 positionOfClick = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            var newPower = Instantiate(selfQuarantine, positionOfClick - new Vector3(0, 2, 0), Quaternion.identity);
+            coinController.DecreaseCoins(selfQuarantineCost);
+        }
     }
+
+    public void SanatizerArea()
+    {
+        FindObjectOfType<CameraController>().isPanning = false;
+        if (coinController.totalCoins >= sanatizeCost)
+        {
+            Vector3 positionOfClick = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            var newPower = Instantiate(sanatizer, positionOfClick - new Vector3(0, 2, 0), Quaternion.identity);
+            coinController.DecreaseCoins(sanatizeCost);
+        }
+    }
+
 }

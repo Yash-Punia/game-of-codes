@@ -930,7 +930,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 373950171}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2020997553}
+        m_MethodName: LockdownPowerUp
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &373950171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1680,7 +1691,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 629681868}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2020997553}
+        m_MethodName: SanatizerArea
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &629681868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2168,7 +2190,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 862700005}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2020997553}
+        m_MethodName: MaskPowerUp
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &862700005
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2697,7 +2730,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1057139179}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2020997553}
+        m_MethodName: SelfQuarantine
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1057139179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4201,7 +4245,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 154, y: -284.1}
-  m_SizeDelta: {x: 127.85803, y: 126.70288}
+  m_SizeDelta: {x: 110, y: 130}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1457193265
 MonoBehaviour:
@@ -5792,6 +5836,30 @@ PrefabInstance:
       propertyPath: personPrefab
       value: 
       objectReference: {fileID: 3060639332519317474, guid: 541f3f667a88afd43b6299031640bb28,
+        type: 3}
+    - target: {fileID: 5834600637141295408, guid: bcde7239260f8684ca3a474114c7b32d,
+        type: 3}
+      propertyPath: maskPowerUp
+      value: 
+      objectReference: {fileID: 2987765121075270611, guid: 3e7bd525c93577e42ac514825238f8a2,
+        type: 3}
+    - target: {fileID: 5834600637141295408, guid: bcde7239260f8684ca3a474114c7b32d,
+        type: 3}
+      propertyPath: selfQuarantinePowerUp
+      value: 
+      objectReference: {fileID: 2987765121075270611, guid: f1a2148666bf72a4f97b93180d8d2d6f,
+        type: 3}
+    - target: {fileID: 5834600637141295408, guid: bcde7239260f8684ca3a474114c7b32d,
+        type: 3}
+      propertyPath: selfQuarantine
+      value: 
+      objectReference: {fileID: 2987765121075270611, guid: f1a2148666bf72a4f97b93180d8d2d6f,
+        type: 3}
+    - target: {fileID: 5834600637141295408, guid: bcde7239260f8684ca3a474114c7b32d,
+        type: 3}
+      propertyPath: sanatizer
+      value: 
+      objectReference: {fileID: 2987765121075270611, guid: b95b87940778c8a4595346dc2ae7c004,
         type: 3}
     - target: {fileID: 8003414024062921766, guid: bcde7239260f8684ca3a474114c7b32d,
         type: 3}
