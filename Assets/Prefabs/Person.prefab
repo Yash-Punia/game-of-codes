@@ -520,8 +520,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 2
   startWaitTime: 3
-  health: 10
-  immunity: 10
+  health: 100
+  immunity: 100
   healthDecreaseRate: 0.5
   immunityDecreaseRate: 0.5
   healthBar: {fileID: 2984084921205374182}
@@ -529,6 +529,7 @@ MonoBehaviour:
   isInfected: 0
   infectionForeField: {fileID: 8789711388375363648}
   powerUpUseForceField: {fileID: 7032670406035497667}
+  isMovementAllowed: 1
 --- !u!54 &1498588962606743542
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1713,6 +1714,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 6162035228325908563, guid: 87362ab2e6d948e488d1839cffbae5df,
+        type: 3}
+      propertyPath: m_MaxValue
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 8487558554441672676, guid: 87362ab2e6d948e488d1839cffbae5df,
         type: 3}
       propertyPath: m_Name
@@ -1949,6 +1955,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383743805472595636, guid: 298ebfd42af381e4bb629df404181324,
+        type: 3}
+      propertyPath: m_MaxValue
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 298ebfd42af381e4bb629df404181324, type: 3}

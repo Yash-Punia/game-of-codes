@@ -42,10 +42,6 @@ public class Person : MonoBehaviour
         immunityBar.GetComponent<Slider>().value = immunity;
         immunityBar.SetActive(true);
 
-        // increasing the current population in Population Controller
-        FindObjectOfType<PopulationController>().currentPopulation++;
-        Debug.Log(FindObjectOfType<PopulationController>().currentPopulation);
-
         //setting up initial values
         minX = -10f;
         maxX = 10f;

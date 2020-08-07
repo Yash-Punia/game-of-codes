@@ -76,9 +76,12 @@ public class QuarantineCenterManager : MonoBehaviour
     //Upgrade method
     public void UpgradeQuarantineCenter()
     {
-        totalBeds++;
-        gameManager.GetComponent<CoinController>().DecreaseCoins(upgradeCost);
-        upgradeCost += upgradeCost;
+        if(gameManager.GetComponent<CoinController>().totalCoins > upgradeCost)
+        {
+            totalBeds++;
+            gameManager.GetComponent<CoinController>().DecreaseCoins(upgradeCost);
+            upgradeCost += upgradeCost;
+        }
     }
 
     //Treatment Handler
@@ -92,7 +95,6 @@ public class QuarantineCenterManager : MonoBehaviour
             {
                 timer = treatmentTime;
                 currentOccupiedBeds--;
-                gameManager.GetComponent<PopulationController>().currentPopulation--;
                 gameManager.GetComponent<PopulationController>().AddPerson();
             }
             else

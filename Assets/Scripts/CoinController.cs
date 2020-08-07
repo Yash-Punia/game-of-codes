@@ -1,14 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class CoinController : MonoBehaviour
 {
     [SerializeField] float houseProductionInterval;
     [SerializeField] GameObject coinPrefab;
+    [SerializeField] TextMeshProUGUI coinText;
+    [SerializeField] GameObject house;
+    [SerializeField] GameObject office;
+    [SerializeField] GameObject officeCanvas;
+    [SerializeField] GameObject houseCanvas;
+    [SerializeField] TextMeshProUGUI houseProductionText;
+    [SerializeField] TextMeshProUGUI houseUpgradationText;
 
     private float timer;
     private int houseProductionAmount;
+    private int houseProductionBoost;
+    private int houseUpgradationCost = 10;
+    private bool officeUnlocked = false;
 
     public int totalCoins { get; set; }
     
@@ -18,16 +29,19 @@ public class CoinController : MonoBehaviour
         timer = houseProductionInterval;
         totalCoins = 300;
         houseProductionAmount = 0;
+        houseProductionBoost = 1;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Displyaing coinText UI
-        //Debug.Log(totalCoins);
+        //Displyaing coinText
+        coinText.text = totalCoins.ToString();
 
         //House money production
         HouseProductionHandler();
+        houseProductionText.text = (houseProductionBoost * GetComponent<PopulationController>().people.Count / houseProductionInterval).ToString() + " coins/sec";
+        houseUpgradationText.text = houseUpgradationCost.ToString();
 
         //Office money production/collection
         OfficeProductionHandler();
@@ -48,7 +62,7 @@ public class CoinController : MonoBehaviour
 
     private void HouseProductionHandler()
     {
-        int currentPopulation = GetComponent<PopulationController>().currentPopulation;
+        int currentPopulation = GetComponent<PopulationController>().people.Count;
         if(currentPopulation > 0)
         {
             if(timer < 0)
@@ -76,7 +90,9 @@ public class CoinController : MonoBehaviour
                 {
                     if(hit.collider.CompareTag("House"))
                     {
-                        IncreaseCoins(houseProductionAmount);
+                        houseCanvas.SetActive(true);
+                        house.GetComponent<Animator>().SetTrigger("Tapped");
+                        IncreaseCoins(houseProductionAmount * houseProductionBoost);
                         houseProductionAmount = 0;
                     }
                 }
@@ -98,9 +114,44 @@ public class CoinController : MonoBehaviour
             {
                 if (hit.collider.CompareTag("Office"))
                 {
-                    IncreaseCoins(GetComponent<PopulationController>().currentPopulation);
+                    if(officeUnlocked)
+                    {
+                        IncreaseCoins(GetComponent<PopulationController>().people.Count);
+                        office.GetComponent<Animator>().SetTrigger("Tapped");
+                    }
+                    else
+                    {
+                        officeCanvas.SetActive(true);
+                    }
                 }
             }
         }
+    }
+
+    public void CloseOfficeCanvas()
+    {
+        officeCanvas.SetActive(false);
+    }
+
+    public void UnlockOffice()
+    {
+        officeCanvas.SetActive(false);
+        officeUnlocked = true;
+    }
+
+    public void CloseHouseCanvas()
+    {
+        houseCanvas.SetActive(false);
+    }
+
+    public void UpgradeHouseProduction()
+    {
+        if(totalCoins > houseUpgradationCost)
+        {
+            houseProductionBoost++;
+            DecreaseCoins(houseUpgradationCost);
+            houseUpgradationCost += houseUpgradationCost;
+        }
+
     }
 }
