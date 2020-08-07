@@ -28,22 +28,4 @@ public class PopulationController : MonoBehaviour
         tempPerson.GetComponent<Person>().personIndex = currentPopulation;
         people.Add(tempPerson);
     }
-
-    public void LockDownEffect()
-    {
-        for(int i =0; i < currentPopulation; i++)
-        {
-            StartCoroutine(LockDown());
-            IEnumerator LockDown()
-            {
-                people[i].GetComponent<Person>().isMovementAllowed = false;
-                yield return new WaitForSeconds(10f);
-                people[i].GetComponent<Person>().isMovementAllowed = true;
-            }
-        }
-        
-    }
-    
-
-
 }

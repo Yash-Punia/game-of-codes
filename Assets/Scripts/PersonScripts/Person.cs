@@ -16,7 +16,7 @@ public class Person : MonoBehaviour
     [SerializeField] GameObject immunityBar;
     public bool isInfected;
 
-    private Animator anim;
+    public Animator anim;
     private Vector3 moveSpot;
     private float waitTime;
     private float minX;
@@ -44,7 +44,6 @@ public class Person : MonoBehaviour
 
         // increasing the current population in Population Controller
         FindObjectOfType<PopulationController>().currentPopulation++;
-        Debug.Log(FindObjectOfType<PopulationController>().currentPopulation);
 
         //setting up initial values
         minX = -10f;
@@ -190,4 +189,65 @@ public class Person : MonoBehaviour
     {
         powerUpUseForceField.SetActive(true);
     }
+
+    // Code below manages the maskEffect
+    public void MaskEffect()
+    {
+        StartCoroutine(MaskEffectTime());
+    }
+    IEnumerator MaskEffectTime()
+    {
+        GetComponent<SphereCollider>().radius = 1.5f;
+        if (GetComponentInChildren<PowerUpShield>())
+            GetComponentInChildren<PowerUpShield>().DecreasePowerShieldSize();
+        if (GetComponentInChildren<InfectionShield>())
+            GetComponentInChildren<InfectionShield>().DecreaseInfectionShieldSize();
+        yield return new WaitForSeconds(10f);
+        GetComponent<SphereCollider>().radius = 2f;
+        if (GetComponentInChildren<InfectionShield>())
+            GetComponentInChildren<InfectionShield>().IncreaseInfectionShieldSize();
+        if (GetComponentInChildren<PowerUpShield>())
+            GetComponentInChildren<PowerUpShield>().IncreasePowerShieldSize();
+    }
+
+    // code below manages the Quarantine Effect of Player it disables the person Infection trigger Collider for 60 sec
+    public void QuarantineEffect(float timeValue, Vector3 position, GameObject prefab)
+    {
+         float  quarantineTime = timeValue;
+        StartCoroutine(Quarantine());
+        IEnumerator Quarantine()
+        {
+            SetHealth(100f);
+            SetImmunity(100f);
+            isInfected = false;
+            isMovementAllowed = false;
+            anim.SetBool("Walking", false);
+            disableInfectionForceField();
+            var newPower = Instantiate(prefab, position, Quaternion.identity);
+            Destroy(newPower, quarantineTime - 1f);
+            GetComponent<SphereCollider>().enabled = false;
+            yield return new WaitForSeconds(quarantineTime);
+            GetComponent<SphereCollider>().enabled = true;
+            anim.SetBool("Walking", true);
+            isMovementAllowed = true;
+        }
+    }
+
+    public void SanatizeThePerson(GameObject SanatizerPrefab,Vector3 position)
+    {
+        var newPower = Instantiate(SanatizerPrefab, position, Quaternion.identity);
+        Destroy(newPower,1f);
+    }
+
+    public void SanatizingPerson(float timeToWaiting)
+    {
+        StartCoroutine(waitForSanatizer());
+        IEnumerator waitForSanatizer()
+        {
+            disableInfectionForceField();
+            yield return new WaitForSeconds(timeToWaiting);
+            enableInfectionForceField();
+        }
+    }
+    
 }
