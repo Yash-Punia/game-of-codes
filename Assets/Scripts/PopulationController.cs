@@ -25,6 +25,28 @@ public class PopulationController : MonoBehaviour
     {
         spawnPoint = new Vector3(Random.Range(-10f, 10f), 0f, Random.Range(-10f, 10f));
         GameObject tempPerson = Instantiate(personPrefab, spawnPoint, Quaternion.identity);
+        currentPopulation++;
+        people.Add(tempPerson);
+    }
+
+    public void SendPersonToQuarantine()
+    {
+        if(currentPopulation > 0)
+        {
+            float minImmunity = 10f;
+            GameObject tempPerson = people[0];
+            foreach(GameObject person in people)
+            {
+                if(person.GetComponent<Person>().immunity < minImmunity)
+                {
+                    minImmunity = person.GetComponent<Person>().immunity;
+                    tempPerson = person;
+                }
+            }
+            people.Remove(tempPerson);
+            Destroy(tempPerson);
+        }
+    }
         tempPerson.GetComponent<Person>().personIndex = currentPopulation;
         people.Add(tempPerson);
     }

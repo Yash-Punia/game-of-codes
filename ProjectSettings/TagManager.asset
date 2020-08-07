@@ -7,6 +7,7 @@ TagManager:
   - PowerUp
   - Person
   - Office
+  - QuarantineCenter
   - House
   - draggingTag
   layers:
