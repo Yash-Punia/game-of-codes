@@ -9335,6 +9335,8 @@ MonoBehaviour:
   personPrefab: {fileID: 3060639332519317474, guid: 541f3f667a88afd43b6299031640bb28,
     type: 3}
   people: []
+  personJumpVFX: {fileID: 198416179944302826, guid: 740c2b3187d56c341b8cb78e8aa925c5,
+    type: 3}
 --- !u!114 &2020997552
 MonoBehaviour:
   m_ObjectHideFlags: 0

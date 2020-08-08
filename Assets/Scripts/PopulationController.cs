@@ -11,6 +11,8 @@ public class PopulationController : MonoBehaviour
     private Vector3 spawnPoint;
     private int personCost = 50;
 
+    [SerializeField] ParticleSystem personJumpVFX;
+
     public int currentPopulation { get; set; }
 
     // Start is called before the first frame update
@@ -25,7 +27,10 @@ public class PopulationController : MonoBehaviour
     {
         if (FindObjectOfType<CoinController>().totalCoins > personCost)
         {
-            spawnPoint = new Vector3(Random.Range(-10f, 10f), 0f, Random.Range(-10f, 10f));
+            spawnPoint = new Vector3(Random.Range(-10f, 10f), 10f, Random.Range(-10f, 10f));
+            ParticleSystem particleVFX = Instantiate(personJumpVFX, spawnPoint, Quaternion.identity);
+            FindObjectOfType<PowerUpButton>().PlayButtonSound();
+            Destroy(particleVFX, 3f);
             GameObject tempPerson = Instantiate(personPrefab, spawnPoint, Quaternion.identity);
             currentPopulation++;
             people.Add(tempPerson);

@@ -140,7 +140,7 @@ public class PowerUpButton : MonoBehaviour
         }
     }
 
-    private void PlayButtonSound()
+    public void PlayButtonSound()
     {
         source.clip = buttonSelect;
         source.Play();
