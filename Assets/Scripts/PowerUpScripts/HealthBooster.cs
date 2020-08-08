@@ -53,23 +53,41 @@ public class HealthBooster : MonoBehaviour
 
             if (hit.collider.GetComponent<Person>())
             {
-                GameObject infectedPerson = hit.collider.gameObject;
-                infectedPerson.GetComponent<Person>().disableInfectionForceField();
-                infectedPerson.GetComponent<Person>().enablePowerUpForceField();
-                StartCoroutine(UsePowerUp());
-
-                IEnumerator UsePowerUp()
+                if (hit.collider.GetComponent<Person>().isInfected)
                 {
-                    yield return new WaitForSeconds(0.5f);
-                    infectedPerson.GetComponent<Person>().disablePowerUpForceField();
-                    infectedPerson.GetComponent<Person>().enableInfectionForceField();
-                    //
-                    // Write Code for the actual impact of power up
-                    infectedPerson.GetComponent<Person>().SetHealth(healthIncreaseValue);
-                    //
-                    laserLine.enabled = false;
-                    FindObjectOfType<CameraController>().isPanning = true;
-                    Destroy(gameObject);
+                    GameObject infectedPerson = hit.collider.gameObject;
+                    infectedPerson.GetComponent<Person>().disableInfectionForceField();
+                    infectedPerson.GetComponent<Person>().enablePowerUpForceField();
+                    StartCoroutine(UsePowerUp());
+
+                    IEnumerator UsePowerUp()
+                    {
+                        yield return new WaitForSeconds(0.5f);
+                        infectedPerson.GetComponent<Person>().disablePowerUpForceField();
+                        infectedPerson.GetComponent<Person>().enableInfectionForceField();
+                        //
+                        // Write Code for the actual impact of power up
+                        infectedPerson.GetComponent<Person>().SetHealth(healthIncreaseValue);
+                        //
+                        laserLine.enabled = false;
+                        FindObjectOfType<CameraController>().isPanning = true;
+                        Destroy(gameObject);
+                    }
+                }
+                else
+                {
+                    StartCoroutine(usePower());
+                    IEnumerator usePower()
+                    {
+                        //hit.collider.GetComponent<Person>().enablePowerUpForceField();
+                        yield return new WaitForSeconds(5f);
+                        hit.collider.GetComponent<Person>().SetHealth(healthIncreaseValue);
+                        //hit.collider.GetComponent<Person>().disablePowerUpForceField();
+                        laserLine.enabled = false;
+                        FindObjectOfType<CameraController>().isPanning = true;
+                        if(gameObject)
+                            Destroy(gameObject);
+                    }
                 }
 
             }

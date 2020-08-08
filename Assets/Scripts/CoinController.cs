@@ -21,6 +21,8 @@ public class CoinController : MonoBehaviour
     private int houseProductionAmount;
     private int houseProductionBoost;
     private int houseUpgradationCost = 10;
+    private int officeUnlockCost = 500;
+    private int numberOfTimesCoinCollected = 0;
     private bool officeUnlocked = false;
     private AudioSource source;
 
@@ -94,16 +96,24 @@ public class CoinController : MonoBehaviour
                 Ray rayFromTouch = Camera.main.ScreenPointToRay(touch.position);
                 if(Physics.Raycast(rayFromTouch, out var hit))
                 {
+                    
                     if(hit.collider.CompareTag("HouseCoin"))
                     {
+                        if (numberOfTimesCoinCollected % 5 ==0)
+                        {
+                            houseCanvas.SetActive(true);
+                        }
+                        else
+                        {
+                            houseCanvas.SetActive(false);
+                        }
+                        numberOfTimesCoinCollected++;
                         house.GetComponent<Animator>().SetTrigger("Tapped");
                         IncreaseCoins(houseProductionAmount * houseProductionBoost);
                         houseProductionAmount = 0;
+                        
                     }
-                    if(hit.collider.CompareTag("House"))
-                    {
-                        houseCanvas.SetActive(true);
-                    }
+                    
                 }
             }
         }
@@ -144,8 +154,14 @@ public class CoinController : MonoBehaviour
 
     public void UnlockOffice()
     {
-        officeCanvas.SetActive(false);
-        officeUnlocked = true;
+        if (totalCoins > officeUnlockCost)
+        {
+            source.clip = upgradeSfx;
+            source.Play();
+            DecreaseCoins(officeUnlockCost);
+            officeCanvas.SetActive(false);
+            officeUnlocked = true;
+        }
     }
 
     public void CloseHouseCanvas()

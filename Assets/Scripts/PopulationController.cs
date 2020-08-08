@@ -7,8 +7,9 @@ public class PopulationController : MonoBehaviour
 {
     [SerializeField] GameObject personPrefab;
 
-    private List<GameObject> people;
+    public List<GameObject> people;
     private Vector3 spawnPoint;
+    private int personCost = 50;
 
     public int currentPopulation { get; set; }
 
@@ -19,7 +20,7 @@ public class PopulationController : MonoBehaviour
         people = new List<GameObject>();
     }
 
-    
+
 
     public void AddPerson()
     {
@@ -27,26 +28,30 @@ public class PopulationController : MonoBehaviour
         GameObject tempPerson = Instantiate(personPrefab, spawnPoint, Quaternion.identity);
         currentPopulation++;
         people.Add(tempPerson);
-    }
+        FindObjectOfType<CoinController>().DecreaseCoins(personCost);
 
-    public void SendPersonToQuarantine()
-    {
-        if(currentPopulation > 0)
+    }
+        public void SendPersonToQuarantine()
         {
-            float minImmunity = 10f;
-            GameObject tempPerson = people[0];
-            foreach(GameObject person in people)
+            if (currentPopulation > 0)
             {
-                if(person.GetComponent<Person>().GetImmunity() < minImmunity)
+                float minImmunity = 10f;
+                GameObject tempPerson = people[0];
+                foreach (GameObject person in people)
                 {
-                    minImmunity = person.GetComponent<Person>().GetImmunity();
-                    tempPerson = person;
+                    if (person.GetComponent<Person>().isInfected)
+                    {
+                        minImmunity = person.GetComponent<Person>().GetImmunity();
+                        tempPerson = person;
+                        tempPerson.GetComponent<Person>().SetHealth(90f);
+                        tempPerson.GetComponent<Person>().SetImmunity(90f);
+                    }
                 }
+                people.Remove(tempPerson);
+                Destroy(tempPerson);
+                tempPerson.GetComponent<Person>().personIndex = currentPopulation;
+                people.Add(tempPerson);
             }
-            people.Remove(tempPerson);
-            Destroy(tempPerson);
+
         }
-    }
-        //tempPerson.GetComponent<Person>().personIndex = currentPopulation;
-        //people.Add(tempPerson);
-    }
+}

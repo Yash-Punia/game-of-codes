@@ -221,9 +221,8 @@ public class Person : MonoBehaviour
         StartCoroutine(Quarantine());
         IEnumerator Quarantine()
         {
-            SetHealth(100f);
-            SetImmunity(100f);
-            isInfected = false;
+            SetHealth(50f);
+            SetImmunity(50f);
             isMovementAllowed = false;
             anim.SetBool("Walking", false);
             disableInfectionForceField();

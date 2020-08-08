@@ -54,24 +54,39 @@ public class SelfQuarantine : MonoBehaviour
 
             if (hit.collider.GetComponent<Person>())
             {
-                GameObject infectedPerson = hit.collider.gameObject;
-                infectedPerson.GetComponent<Person>().disableInfectionForceField();
-                infectedPerson.GetComponent<Person>().enablePowerUpForceField();
-                StartCoroutine(UsePowerUp());
-
-                IEnumerator UsePowerUp()
+                if (hit.collider.GetComponent<Person>().isInfected)
                 {
-                    yield return new WaitForSeconds(0.5f);
-                    infectedPerson.GetComponent<Person>().disablePowerUpForceField();
-                    infectedPerson.GetComponent<Person>().enableInfectionForceField();
-                    //
-                    // Write Code for the actual impact of power up
-                    infectedPerson.GetComponent<Person>().QuarantineEffect(quarantineTime, infectedPerson.GetComponent<Transform>().position, selfQuarantinePowerUp);
-  
-                    //
-                    laserLine.enabled = false;
-                    FindObjectOfType<CameraController>().isPanning = true;
-                    Destroy(gameObject);
+
+                    GameObject infectedPerson = hit.collider.gameObject;
+                    infectedPerson.GetComponent<Person>().disableInfectionForceField();
+                    infectedPerson.GetComponent<Person>().enablePowerUpForceField();
+                    StartCoroutine(UsePowerUp());
+
+                    IEnumerator UsePowerUp()
+                    {
+                        yield return new WaitForSeconds(0.5f);
+                        infectedPerson.GetComponent<Person>().disablePowerUpForceField();
+                        infectedPerson.GetComponent<Person>().enableInfectionForceField();
+                        //
+                        // Write Code for the actual impact of power up
+                        infectedPerson.GetComponent<Person>().QuarantineEffect(quarantineTime, infectedPerson.GetComponent<Transform>().position, selfQuarantinePowerUp);
+                        //
+                        laserLine.enabled = false;
+                        FindObjectOfType<CameraController>().isPanning = true;
+                        Destroy(gameObject);
+                    }
+                }
+                else
+                {
+                    StartCoroutine(waitingPowerToUse());
+                    IEnumerator waitingPowerToUse()
+                    {
+                        yield return new WaitForSeconds(10f);
+                        laserLine.enabled = false;
+                        FindObjectOfType<CameraController>().isPanning = true;
+                        if (gameObject)
+                        { Destroy(gameObject); }
+                    }
                 }
 
             }

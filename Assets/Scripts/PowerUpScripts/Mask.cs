@@ -24,6 +24,7 @@ public class Mask : MonoBehaviour
 
     IEnumerator PowerUpTimeHandler()
     {
+
         yield return new WaitForSeconds(maxTime);
         FindObjectOfType<CameraController>().isPanning = true;
         Destroy(gameObject);
@@ -51,23 +52,37 @@ public class Mask : MonoBehaviour
 
             if (hit.collider.GetComponent<Person>())
             {
-                GameObject infectedPerson = hit.collider.gameObject;
-                infectedPerson.GetComponent<Person>().disableInfectionForceField();
-                infectedPerson.GetComponent<Person>().enablePowerUpForceField();
-                StartCoroutine(UsePowerUp());
-
-                IEnumerator UsePowerUp()
+                if (hit.collider.GetComponent<Person>().isInfected)
                 {
-                    yield return new WaitForSeconds(0.5f);
-                    infectedPerson.GetComponent<Person>().disablePowerUpForceField();
-                    infectedPerson.GetComponent<Person>().enableInfectionForceField();
-                    //
-                    // Write Code for the actual impact of power up
-                    infectedPerson.GetComponent<Person>().MaskEffect();
-                    //
-                    laserLine.enabled = false;
-                    FindObjectOfType<CameraController>().isPanning = true;
-                    Destroy(gameObject);
+                    GameObject infectedPerson = hit.collider.gameObject;
+                    infectedPerson.GetComponent<Person>().disableInfectionForceField();
+                    infectedPerson.GetComponent<Person>().enablePowerUpForceField();
+                    StartCoroutine(UsePowerUp());
+
+                    IEnumerator UsePowerUp()
+                    {
+                        yield return new WaitForSeconds(0.5f);
+                        infectedPerson.GetComponent<Person>().disablePowerUpForceField();
+                        infectedPerson.GetComponent<Person>().enableInfectionForceField();
+                        //
+                        // Write Code for the actual impact of power up
+                        infectedPerson.GetComponent<Person>().MaskEffect();
+                        //
+                        laserLine.enabled = false;
+                        FindObjectOfType<CameraController>().isPanning = true;
+                        Destroy(gameObject);
+                    }
+                }
+                else
+                {
+                    StartCoroutine(waitToUsePowerUp());
+                    IEnumerator waitToUsePowerUp()
+                    {
+                        yield return new WaitForSeconds(10f);
+                        laserLine.enabled = false;
+                        FindObjectOfType<CameraController>().isPanning = true;
+                        Destroy(gameObject);
+                    }
                 }
 
             }
