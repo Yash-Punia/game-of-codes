@@ -37,9 +37,9 @@ public class PopulationController : MonoBehaviour
             GameObject tempPerson = people[0];
             foreach(GameObject person in people)
             {
-                if(person.GetComponent<Person>().immunity < minImmunity)
+                if(person.GetComponent<Person>().GetImmunity() < minImmunity)
                 {
-                    minImmunity = person.GetComponent<Person>().immunity;
+                    minImmunity = person.GetComponent<Person>().GetImmunity();
                     tempPerson = person;
                 }
             }
@@ -47,7 +47,6 @@ public class PopulationController : MonoBehaviour
             Destroy(tempPerson);
         }
     }
-        tempPerson.GetComponent<Person>().personIndex = currentPopulation;
-        people.Add(tempPerson);
+        //tempPerson.GetComponent<Person>().personIndex = currentPopulation;
+        //people.Add(tempPerson);
     }
-}
