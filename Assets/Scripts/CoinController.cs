@@ -8,6 +8,7 @@ public class CoinController : MonoBehaviour
     [SerializeField] float houseProductionInterval;
     [SerializeField] GameObject coinPrefab;
     [SerializeField] TextMeshProUGUI coinText;
+    [SerializeField] TextMeshProUGUI currentPopulationText;
     [SerializeField] GameObject house;
     [SerializeField] GameObject office;
     [SerializeField] GameObject officeCanvas;
@@ -43,7 +44,7 @@ public class CoinController : MonoBehaviour
     {
         //Displyaing coinText
         coinText.text = totalCoins.ToString();
-
+        currentPopulationText.text = FindObjectOfType<PopulationController>().currentPopulation.ToString();
         //House money production
         HouseProductionHandler();
         houseProductionText.text = (houseProductionBoost * GetComponent<PopulationController>().people.Count / houseProductionInterval).ToString() + " coins/sec";

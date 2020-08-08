@@ -16,7 +16,7 @@ public class QuarantineCenterManager : MonoBehaviour
     [SerializeField] AudioClip upgradeSfx;
 
     private int totalBeds;
-    private int currentOccupiedBeds;
+    public int currentOccupiedBeds;
     private int upgradeCost;
     private float timer;
     private float treatmentTime;
@@ -70,7 +70,7 @@ public class QuarantineCenterManager : MonoBehaviour
     {
         if(currentOccupiedBeds < totalBeds)
         {
-            currentOccupiedBeds++;
+            //currentOccupiedBeds++;
             gameManager.GetComponent<PopulationController>().SendPersonToQuarantine();
         }
     }

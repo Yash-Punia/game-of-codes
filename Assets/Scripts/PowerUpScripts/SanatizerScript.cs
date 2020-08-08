@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class SanatizerScript : MonoBehaviour
 {
-    [SerializeField] float timeToWaiting = 10f;
+    [SerializeField] float timeToWaiting = 15f;
     private void OnTriggerEnter(Collider other)
     {
         if(other.GetComponent<Person>())
         {
-            if(other.GetComponent<Person>().isInfected)
+            if (other.GetComponent<Person>().isInfected)
             {
                 other.GetComponent<Person>().SanatizingPerson(timeToWaiting);
-                Destroy(gameObject,1f);
-            }      
+                Destroy(gameObject, 0.5f);
+            }
         }
     }
 }

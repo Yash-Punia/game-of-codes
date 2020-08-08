@@ -18,7 +18,7 @@ public class PowerUpButton : MonoBehaviour
 
     // Lockdown doesn't need a gameObject Prefab
     // Need to make a particle effect
-    [SerializeField] int lockdownPowerUpCost = 20;
+    [SerializeField] int lockdownPowerUpCost = 30;
 
 
     [SerializeField] GameObject maskPowerUp;
@@ -26,11 +26,11 @@ public class PowerUpButton : MonoBehaviour
 
 
     [SerializeField] GameObject selfQuarantine;
-    [SerializeField] int selfQuarantineCost = 20;
+    [SerializeField] int selfQuarantineCost = 100;
 
 
     [SerializeField] GameObject sanatizer;
-    [SerializeField] int sanatizeCost = 20;
+    [SerializeField] int sanatizeCost = 30;
 
     [SerializeField] AudioClip buttonSelect;
     
