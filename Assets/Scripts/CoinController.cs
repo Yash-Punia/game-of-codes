@@ -1,33 +1,51 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class CoinController : MonoBehaviour
 {
     [SerializeField] float houseProductionInterval;
     [SerializeField] GameObject coinPrefab;
+    [SerializeField] TextMeshProUGUI coinText;
+    [SerializeField] GameObject house;
+    [SerializeField] GameObject office;
+    [SerializeField] GameObject officeCanvas;
+    [SerializeField] GameObject houseCanvas;
+    [SerializeField] TextMeshProUGUI houseProductionText;
+    [SerializeField] TextMeshProUGUI houseUpgradationText;
+    [SerializeField] AudioClip upgradeSfx;
+    [SerializeField] AudioClip coinSfx;
 
     private float timer;
     private int houseProductionAmount;
+    private int houseProductionBoost;
+    private int houseUpgradationCost = 10;
+    private bool officeUnlocked = false;
+    private AudioSource source;
 
     public int totalCoins { get; set; }
     
     // Start is called before the first frame update
     void Start()
     {
+        source = GetComponent<AudioSource>();
         timer = houseProductionInterval;
         totalCoins = 300;
         houseProductionAmount = 0;
+        houseProductionBoost = 1;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Displyaing coinText UI
-        //Debug.Log(totalCoins);
+        //Displyaing coinText
+        coinText.text = totalCoins.ToString();
 
         //House money production
         HouseProductionHandler();
+        houseProductionText.text = (houseProductionBoost * GetComponent<PopulationController>().people.Count / houseProductionInterval).ToString() + " coins/sec";
+        houseUpgradationText.text = houseUpgradationCost.ToString();
 
         //Office money production/collection
         OfficeProductionHandler();
@@ -38,6 +56,8 @@ public class CoinController : MonoBehaviour
 
     public void IncreaseCoins(int amount)
     {
+        source.clip = coinSfx;
+        source.Play();
         totalCoins += amount;
     }
 
@@ -48,7 +68,7 @@ public class CoinController : MonoBehaviour
 
     private void HouseProductionHandler()
     {
-        int currentPopulation = GetComponent<PopulationController>().currentPopulation;
+        int currentPopulation = GetComponent<PopulationController>().people.Count;
         if(currentPopulation > 0)
         {
             if(timer < 0)
@@ -74,10 +94,15 @@ public class CoinController : MonoBehaviour
                 Ray rayFromTouch = Camera.main.ScreenPointToRay(touch.position);
                 if(Physics.Raycast(rayFromTouch, out var hit))
                 {
+                    if(hit.collider.CompareTag("HouseCoin"))
+                    {
+                        house.GetComponent<Animator>().SetTrigger("Tapped");
+                        IncreaseCoins(houseProductionAmount * houseProductionBoost);
+                        houseProductionAmount = 0;
+                    }
                     if(hit.collider.CompareTag("House"))
                     {
-                        IncreaseCoins(houseProductionAmount);
-                        houseProductionAmount = 0;
+                        houseCanvas.SetActive(true);
                     }
                 }
             }
@@ -98,9 +123,46 @@ public class CoinController : MonoBehaviour
             {
                 if (hit.collider.CompareTag("Office"))
                 {
-                    IncreaseCoins(GetComponent<PopulationController>().currentPopulation);
+                    if(officeUnlocked)
+                    {
+                        IncreaseCoins(GetComponent<PopulationController>().people.Count);
+                        office.GetComponent<Animator>().SetTrigger("Tapped");
+                    }
+                    else
+                    {
+                        officeCanvas.SetActive(true);
+                    }
                 }
             }
         }
+    }
+
+    public void CloseOfficeCanvas()
+    {
+        officeCanvas.SetActive(false);
+    }
+
+    public void UnlockOffice()
+    {
+        officeCanvas.SetActive(false);
+        officeUnlocked = true;
+    }
+
+    public void CloseHouseCanvas()
+    {
+        houseCanvas.SetActive(false);
+    }
+
+    public void UpgradeHouseProduction()
+    {
+        if(totalCoins > houseUpgradationCost)
+        {
+            source.clip = upgradeSfx;
+            source.Play();
+            houseProductionBoost++;
+            DecreaseCoins(houseUpgradationCost);
+            houseUpgradationCost += houseUpgradationCost;
+        }
+
     }
 }

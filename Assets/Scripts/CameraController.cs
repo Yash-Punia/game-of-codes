@@ -41,7 +41,7 @@ public class CameraController : MonoBehaviour
             }
 
             //Pinch
-            if (Input.touchCount >= 2)
+            if (Input.touchCount >= 2 && cam.transform.position.y <= 30f && cam.transform.position.y >= 5f)
             {
                 var pos1 = PlanePosition(Input.GetTouch(0).position);
                 var pos2 = PlanePosition(Input.GetTouch(1).position);
@@ -62,6 +62,10 @@ public class CameraController : MonoBehaviour
                     cam.transform.RotateAround(pos1, plane.normal, Vector3.SignedAngle(pos2 - pos1, pos2b - pos1b, plane.normal));
             }
 
+            if (cam.transform.position.y > 30f)
+                cam.transform.position = new Vector3(cam.transform.position.x, 30f, cam.transform.position.z);
+            if (cam.transform.position.y < 5f)
+                cam.transform.position = new Vector3(cam.transform.position.x, 5f, cam.transform.position.z);
         }
     }
 
