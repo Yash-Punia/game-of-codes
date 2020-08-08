@@ -5,11 +5,11 @@ using TMPro;
 
 public class CoinController : MonoBehaviour
 {
+    //Setting up some variables through the Unity Editor
     [SerializeField] float houseProductionInterval;
     [SerializeField] GameObject coinPrefab;
     [SerializeField] TextMeshProUGUI coinText;
     [SerializeField] TextMeshProUGUI currentPopulationText;
-    [SerializeField] GameObject house;
     [SerializeField] GameObject office;
     [SerializeField] GameObject officeCanvas;
     [SerializeField] GameObject houseCanvas;
@@ -18,12 +18,12 @@ public class CoinController : MonoBehaviour
     [SerializeField] AudioClip upgradeSfx;
     [SerializeField] AudioClip coinSfx;
 
+    //private variables
     private float timer;
     private int houseProductionAmount;
     private int houseProductionBoost;
     private int houseUpgradationCost = 10;
     private int officeUnlockCost = 500;
-    private int numberOfTimesCoinCollected = 0;
     private bool officeUnlocked = false;
     private AudioSource source;
 
@@ -34,6 +34,8 @@ public class CoinController : MonoBehaviour
     {
         source = GetComponent<AudioSource>();
         timer = houseProductionInterval;
+
+        //Setting up initial values for private variables
         totalCoins = 300;
         houseProductionAmount = 0;
         houseProductionBoost = 1;
@@ -57,6 +59,7 @@ public class CoinController : MonoBehaviour
         HouseProductionCollectionHandler();
     }
 
+    //Method to increase total coins
     public void IncreaseCoins(int amount)
     {
         source.clip = coinSfx;
@@ -64,11 +67,13 @@ public class CoinController : MonoBehaviour
         totalCoins += amount;
     }
 
+    //Method to decrease total coins 
     public void DecreaseCoins(int amount)
     {
         totalCoins -= amount;
     }
 
+    //Regularly produces coins based on the number of people in playArea
     private void HouseProductionHandler()
     {
         int currentPopulation = GetComponent<PopulationController>().people.Count;
@@ -97,24 +102,17 @@ public class CoinController : MonoBehaviour
                 Ray rayFromTouch = Camera.main.ScreenPointToRay(touch.position);
                 if(Physics.Raycast(rayFromTouch, out var hit))
                 {
-                    
                     if(hit.collider.CompareTag("HouseCoin"))
                     {
-                        if (numberOfTimesCoinCollected % 5 ==0)
-                        {
-                            houseCanvas.SetActive(true);
-                        }
-                        else
-                        {
-                            houseCanvas.SetActive(false);
-                        }
-                        numberOfTimesCoinCollected++;
-                        house.GetComponent<Animator>().SetTrigger("Tapped");
                         IncreaseCoins(houseProductionAmount * houseProductionBoost);
                         houseProductionAmount = 0;
-                        
                     }
-                    
+
+                    if(hit.collider.CompareTag("House"))
+                    {
+                        Debug.Log("House Tapped");
+                        houseCanvas.SetActive(true);
+                    }
                 }
             }
         }

@@ -32,6 +32,7 @@ public class PopulationController : MonoBehaviour
             FindObjectOfType<PowerUpButton>().PlayButtonSound();
             Destroy(particleVFX, 3f);
             GameObject tempPerson = Instantiate(personPrefab, spawnPoint, Quaternion.identity);
+            tempPerson.GetComponent<Person>().isInfected = (Random.value > 0.5f);
             currentPopulation++;
             people.Add(tempPerson);
         }

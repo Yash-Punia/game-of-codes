@@ -22,7 +22,10 @@ public class TitleScreenManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //A constant motion around the game board
         cameraRig.transform.Rotate(0, rotationSpeed * Time.deltaTime, 0);
+        
+        //back button quits the game
         if(Input.GetKey(KeyCode.Escape))
         {
             ExitGame();
