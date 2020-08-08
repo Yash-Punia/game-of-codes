@@ -26,7 +26,7 @@ public class PowerUpButton : MonoBehaviour
 
 
     [SerializeField] GameObject selfQuarantine;
-    [SerializeField] int selfQuarantineCost = 100;
+    [SerializeField] int selfQuarantineCost = 50;
 
 
     [SerializeField] GameObject sanatizer;

@@ -27,14 +27,13 @@ public class PopulationController : MonoBehaviour
     {
         if (FindObjectOfType<CoinController>().totalCoins > personCost)
         {
-            spawnPoint = new Vector3(Random.Range(-10f, 10f), 10f, Random.Range(-10f, 10f));
-            ParticleSystem particleVFX = Instantiate(personJumpVFX, spawnPoint, Quaternion.identity);
+            spawnPoint = new Vector3(Random.Range(-10f, 10f), 0f, Random.Range(-10f, 10f));
+            ParticleSystem particleVFX = Instantiate(personJumpVFX, spawnPoint + new Vector3(0,1,0), Quaternion.identity);
             FindObjectOfType<PowerUpButton>().PlayButtonSound();
             Destroy(particleVFX, 3f);
             GameObject tempPerson = Instantiate(personPrefab, spawnPoint, Quaternion.identity);
             currentPopulation++;
             people.Add(tempPerson);
-            FindObjectOfType<CoinController>().DecreaseCoins(personCost);
         }
 
     }
