@@ -72,7 +72,7 @@ public class CoinController : MonoBehaviour
         timer = houseProductionInterval;
 
         //Setting up initial values for private variables
-        totalCoins = 300;
+        totalCoins = 3000000;
         houseProductionAmount = 0;
         houseProductionBoost = 1;
         animalsGameobject.SetActive(false);
@@ -197,11 +197,15 @@ public class CoinController : MonoBehaviour
     }
     public void OpenShoppingCanvas()
     {
-        source.clip = shoppingListClicked;
-        source.Play();
-        FindObjectOfType<CameraController>().StopPanning();
-        shoppingCanvas.SetActive(true);
-        Time.timeScale = 0f; // pausing the game
+        if (!GetComponent<HelperCanvas>().isAnyCanvasOpened)
+        {
+            source.clip = shoppingListClicked;
+            source.Play();
+            FindObjectOfType<CameraController>().StopPanning();
+            shoppingCanvas.SetActive(true);
+            GetComponent<HelperCanvas>().isAnyCanvasOpened = true;
+            Time.timeScale = 0f; // pausing the game
+        }
     }
     public void OpenOfficeCanvas()
     {
@@ -223,6 +227,7 @@ public class CoinController : MonoBehaviour
     public void CloseShoppingCanvas()
     {
         source.clip = cancelClicked;
+        GetComponent<HelperCanvas>().isAnyCanvasOpened = false;
         source.Play();
         FindObjectOfType<CameraController>().AllowPanning();
         Time.timeScale = 1f; // making game active again

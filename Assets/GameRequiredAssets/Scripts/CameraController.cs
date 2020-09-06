@@ -40,33 +40,36 @@ public class CameraController : MonoBehaviour
     }
     public void PlayFPSCamera()
     {
-        StopPanning();
-        GetComponent<PowerUpButton>().PlayButtonSound();
-        GetComponent<PauseManagerScript>().DisableUICanvas();
-        //cam.enabled = false;
-        cam.GetComponent<Camera>().enabled = false;
-        //FPS_Camera.enabled = true;
-        FPS_UI_Canvas.enabled = true;
-        FPS_Camera.GetComponent<Camera>().enabled = true;
-        isMainCameraOn = false;
+            StopPanning();
+            GetComponent<PowerUpButton>().PlayButtonSound();
+            GetComponent<PauseManagerScript>().DisableUICanvas();
+            //cam.enabled = false;
+            cam.GetComponent<Camera>().enabled = false;
+            //FPS_Camera.enabled = true;
+            FPS_UI_Canvas.enabled = true;
+            FPS_Camera.GetComponent<Camera>().enabled = true;
+            isMainCameraOn = false;
     }
 
 
     public void FPSPlayButton()
     {
-        if (GetComponent<CoinController>().is3DViewerEnabled)
+        if (!GetComponent<HelperCanvas>().isAnyCanvasOpened)
         {
-            if (isFPS)
+            if (GetComponent<CoinController>().is3DViewerEnabled)
             {
-                FPS_Player_GameObject.SetActive(false);
-                PlayMainCamera();
-                isFPS = false;
-            }
-            else
-            {
-                FPS_Player_GameObject.SetActive(true);
-                PlayFPSCamera();
-                isFPS = true;
+                if (isFPS)
+                {
+                    FPS_Player_GameObject.SetActive(false);
+                    PlayMainCamera();
+                    isFPS = false;
+                }
+                else
+                {
+                    FPS_Player_GameObject.SetActive(true);
+                    PlayFPSCamera();
+                    isFPS = true;
+                }
             }
         }
     }

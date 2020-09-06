@@ -4,23 +4,30 @@ using UnityEngine;
 
 public class HelperCanvas : MonoBehaviour
 {
+    public bool isAnyCanvasOpened = false;
     [SerializeField] GameObject UIHelperCanvas;
-    private bool isHelperUIOn = true;
+    private bool isHelperUIOn = false;
 
     public void SetHelperCanvasOffOn()
     {
-        GetComponent<PowerUpButton>().PlayButtonSound();
-        if (isHelperUIOn)
+        if (!isAnyCanvasOpened)
         {
-            UIHelperCanvas.SetActive(false);
-            isHelperUIOn = false;
+            GetComponent<PowerUpButton>().PlayButtonSound();
+            if (!isHelperUIOn)
+            {
+                UIHelperCanvas.SetActive(true);
+                isAnyCanvasOpened = true;
+                isHelperUIOn = true;
+            }
         }
         else
         {
-            UIHelperCanvas.SetActive(true);
-            isHelperUIOn = true;
+            if (isHelperUIOn)
+            {
+                UIHelperCanvas.SetActive(false);
+                isHelperUIOn = false;
+                isAnyCanvasOpened = false;
+            }
         }
-    }
-
-    
+    }    
 }

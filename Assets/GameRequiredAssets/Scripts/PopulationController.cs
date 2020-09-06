@@ -30,23 +30,26 @@ public class PopulationController : MonoBehaviour
     private int tempPeople = 0;
     public void AddPerson()
     {
-        if (FindObjectOfType<CoinController>().totalCoins > personCost)
+        if (!GetComponent<HelperCanvas>().isAnyCanvasOpened)
         {
-            GetComponent<PowerUpButton>().PlayButtonSound();
-            spawnPoint = new Vector3(Random.Range(-10f, 10f), 0f, Random.Range(-10f, 10f));
-            ParticleSystem particleVFX = Instantiate(personJumpVFX, spawnPoint + new Vector3(0,1,0), Quaternion.identity);
-            FindObjectOfType<PowerUpButton>().PlayButtonSound();
-            Destroy(particleVFX, 1.5f);
-            GameObject tempPerson = Instantiate(personPrefab, spawnPoint, Quaternion.identity);
-            FindObjectOfType<CoinController>().DecreaseCoins(personCost);
-            personCost += 5;
-            GetComponent<PowerUpButton>().UpdatePersonCostText(personCost);
-            tempPerson.GetComponent<Person>().isInfected = (Random.value > 0.5f);
-            currentPopulation++;
-            UpdatePeopleNumber();
-            tempPeople++;// a variable to get the number of person added
-            people.Add(tempPerson);
-            // Code for finding the healthy people
+            if (FindObjectOfType<CoinController>().totalCoins > personCost)
+            {
+                GetComponent<PowerUpButton>().PlayButtonSound();
+                spawnPoint = new Vector3(Random.Range(-10f, 10f), 0f, Random.Range(-10f, 10f));
+                ParticleSystem particleVFX = Instantiate(personJumpVFX, spawnPoint + new Vector3(0, 1, 0), Quaternion.identity);
+                FindObjectOfType<PowerUpButton>().PlayButtonSound();
+                Destroy(particleVFX, 1.5f);
+                GameObject tempPerson = Instantiate(personPrefab, spawnPoint, Quaternion.identity);
+                FindObjectOfType<CoinController>().DecreaseCoins(personCost);
+                personCost += 5;
+                GetComponent<PowerUpButton>().UpdatePersonCostText(personCost);
+                tempPerson.GetComponent<Person>().isInfected = (Random.value > 0.5f);
+                currentPopulation++;
+                UpdatePeopleNumber();
+                tempPeople++;// a variable to get the number of person added
+                people.Add(tempPerson);
+                // Code for finding the healthy people
+            }
         }
 
         CheckLevelUp();

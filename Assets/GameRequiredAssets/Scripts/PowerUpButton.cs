@@ -54,63 +54,72 @@ public class PowerUpButton : MonoBehaviour
 
     public void ImmunityDrink()
     {
-        PlayButtonSound();
-        FindObjectOfType<CameraController>().isPanning = false;
-        if (coinController.totalCoins >= immunityDrinkCost)
+        if (!GetComponent<HelperCanvas>().isAnyCanvasOpened)
         {
-            Vector3 positionOfClick = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            var newPower = Instantiate(immunityDrink, positionOfClick - new Vector3(0,2,0), Quaternion.identity);
-            coinController.DecreaseCoins(immunityDrinkCost);
-            immunityDrinkCost += 5;
-            if (immunityDrinkText)
+            PlayButtonSound();
+            FindObjectOfType<CameraController>().isPanning = false;
+            if (coinController.totalCoins >= immunityDrinkCost)
             {
-                immunityDrinkText.text = immunityDrinkCost.ToString();
+                Vector3 positionOfClick = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                var newPower = Instantiate(immunityDrink, positionOfClick - new Vector3(0, 2, 0), Quaternion.identity);
+                coinController.DecreaseCoins(immunityDrinkCost);
+                immunityDrinkCost += 5;
+                if (immunityDrinkText)
+                {
+                    immunityDrinkText.text = immunityDrinkCost.ToString();
+                }
             }
-        }
-        else
-        {
-            FindObjectOfType<CameraController>().isPanning = true;
+            else
+            {
+                FindObjectOfType<CameraController>().isPanning = true;
+            }
         }
     }
     public void HealthBooster()
     {
-        PlayButtonSound();
-        FindObjectOfType<CameraController>().isPanning = false;
-        if (coinController.totalCoins >= healthBoosterCost)
+        if (!GetComponent<HelperCanvas>().isAnyCanvasOpened)
         {
-            Vector3 positionOfClick = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            var newPower = Instantiate(healthBooster, positionOfClick - new Vector3(0, 2, 0), Quaternion.identity);
-            coinController.DecreaseCoins(healthBoosterCost);
-            healthBoosterCost += 5;
-            if (healthBoosterText)
+            PlayButtonSound();
+            FindObjectOfType<CameraController>().isPanning = false;
+            if (coinController.totalCoins >= healthBoosterCost)
             {
-                healthBoosterText.text = healthBoosterCost.ToString();
+                Vector3 positionOfClick = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                var newPower = Instantiate(healthBooster, positionOfClick - new Vector3(0, 2, 0), Quaternion.identity);
+                coinController.DecreaseCoins(healthBoosterCost);
+                healthBoosterCost += 5;
+                if (healthBoosterText)
+                {
+                    healthBoosterText.text = healthBoosterCost.ToString();
+                }
             }
-        }
-        else
-        {
-            FindObjectOfType<CameraController>().isPanning = true;
+            else
+            {
+                FindObjectOfType<CameraController>().isPanning = true;
+            }
         }
     }
 
     public void MaskPowerUp()
     {
-        PlayButtonSound();
-        FindObjectOfType<CameraController>().isPanning = false;
-        if (coinController.totalCoins >= MaskCost)
+        if (!GetComponent<HelperCanvas>().isAnyCanvasOpened)
         {
-            Vector3 positionOfClick = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            var newPower = Instantiate(maskPowerUp, positionOfClick - new Vector3(0, 2, 0), Quaternion.identity);
-            MaskCost += 5;
-            coinController.DecreaseCoins(MaskCost);
-            if(maskText)
+            PlayButtonSound();
+            FindObjectOfType<CameraController>().isPanning = false;
+            if (coinController.totalCoins >= MaskCost)
             {
-                maskText.text = MaskCost.ToString();
+                Vector3 positionOfClick = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                var newPower = Instantiate(maskPowerUp, positionOfClick - new Vector3(0, 2, 0), Quaternion.identity);
+                MaskCost += 5;
+                coinController.DecreaseCoins(MaskCost);
+                if (maskText)
+                {
+                    maskText.text = MaskCost.ToString();
+                }
             }
-        }
-        else
-        {
-            FindObjectOfType<CameraController>().isPanning = true;
+            else
+            {
+                FindObjectOfType<CameraController>().isPanning = true;
+            }
         }
 
     }
@@ -125,106 +134,118 @@ public class PowerUpButton : MonoBehaviour
 
     public void PersonPowerUp()
     {
-        PlayButtonSound();
-        FindObjectOfType<CameraController>().isPanning = false;
-        if (coinController.totalCoins >= personCost)
+        if (!GetComponent<HelperCanvas>().isAnyCanvasOpened)
         {
-            GetComponent<PopulationController>().AddPerson();
-            coinController.DecreaseCoins(personCost);
-            if(personText)
+            PlayButtonSound();
+            FindObjectOfType<CameraController>().isPanning = false;
+            if (coinController.totalCoins >= personCost)
             {
-                personText.text = personCost.ToString();
+                GetComponent<PopulationController>().AddPerson();
+                coinController.DecreaseCoins(personCost);
+                if (personText)
+                {
+                    personText.text = personCost.ToString();
+                }
             }
-        }
-        else
-        {
+            else
+            {
+                FindObjectOfType<CameraController>().isPanning = true;
+            }
             FindObjectOfType<CameraController>().isPanning = true;
         }
-        FindObjectOfType<CameraController>().isPanning = true;
     }
 
     public int timesQuarantineCentreUsed = 0;
     public void LockdownPowerUp()
     {
-        PlayButtonSound();
-        FindObjectOfType<CameraController>().isPanning = false;
-        if (coinController.totalCoins >= lockdownPowerUpCost)
+        if (!GetComponent<HelperCanvas>().isAnyCanvasOpened)
         {
-            Vector3 positionOfClick = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Person[] allPerson = FindObjectsOfType<Person>();
-            foreach(Person person in allPerson)
+            PlayButtonSound();
+            FindObjectOfType<CameraController>().isPanning = false;
+            if (coinController.totalCoins >= lockdownPowerUpCost)
             {
-                if (person)
+                Vector3 positionOfClick = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Person[] allPerson = FindObjectsOfType<Person>();
+                foreach (Person person in allPerson)
                 {
-                    if (person.GetComponent<Person>().isQuarantined == false)
+                    if (person)
                     {
-                        timesQuarantineCentreUsed++;
-                        StartCoroutine(LockDown());
-                        IEnumerator LockDown()
+                        if (person.GetComponent<Person>().isQuarantined == false)
                         {
-                            person.GetComponent<Person>().isMovementAllowed = false;
-                            person.GetComponent<Person>().anim.SetBool("Walking", false);
-                            yield return new WaitForSeconds(15f);
-                            person.GetComponent<Person>().isMovementAllowed = true;
-                            person.GetComponent<Person>().anim.SetBool("Walking", true);
+                            timesQuarantineCentreUsed++;
+                            StartCoroutine(LockDown());
+                            IEnumerator LockDown()
+                            {
+                                person.GetComponent<Person>().isMovementAllowed = false;
+                                person.GetComponent<Person>().anim.SetBool("Walking", false);
+                                yield return new WaitForSeconds(15f);
+                                person.GetComponent<Person>().isMovementAllowed = true;
+                                person.GetComponent<Person>().anim.SetBool("Walking", true);
+                            }
                         }
                     }
                 }
+                coinController.DecreaseCoins(lockdownPowerUpCost + timesQuarantineCentreUsed * 10);
+                if (lockDownText)
+                {
+                    lockDownText.text = (lockdownPowerUpCost + timesQuarantineCentreUsed * 10).ToString();
+                }
+
             }
-            coinController.DecreaseCoins(lockdownPowerUpCost + timesQuarantineCentreUsed*10);
-            if(lockDownText)
+            else
             {
-                lockDownText.text = (lockdownPowerUpCost + timesQuarantineCentreUsed * 10).ToString();
+                FindObjectOfType<CameraController>().isPanning = true;
             }
-            
-        }
-        else
-        {
+
             FindObjectOfType<CameraController>().isPanning = true;
         }
-        
-        FindObjectOfType<CameraController>().isPanning = true;
      }
 
     public void SelfQuarantine()
     {
-        PlayButtonSound();
-        FindObjectOfType<CameraController>().isPanning = false;
-        if (coinController.totalCoins >= selfQuarantineCost)
+        if (!GetComponent<HelperCanvas>().isAnyCanvasOpened)
         {
-            Vector3 positionOfClick = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            var newPower = Instantiate(selfQuarantine, positionOfClick - new Vector3(0, 2, 0), Quaternion.identity);
-            coinController.DecreaseCoins(selfQuarantineCost);
-            selfQuarantineCost += 10;
-            if(selfQuarantineText)
+            PlayButtonSound();
+            FindObjectOfType<CameraController>().isPanning = false;
+            if (coinController.totalCoins >= selfQuarantineCost)
             {
-                selfQuarantineText.text = selfQuarantineCost.ToString();
+                Vector3 positionOfClick = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                var newPower = Instantiate(selfQuarantine, positionOfClick - new Vector3(0, 2, 0), Quaternion.identity);
+                coinController.DecreaseCoins(selfQuarantineCost);
+                selfQuarantineCost += 10;
+                if (selfQuarantineText)
+                {
+                    selfQuarantineText.text = selfQuarantineCost.ToString();
+                }
             }
-        }
-        else
-        {
-            FindObjectOfType<CameraController>().isPanning = true;
+            else
+            {
+                FindObjectOfType<CameraController>().isPanning = true;
+            }
         }
     }
 
     public void SanatizerArea()
     {
-        PlayButtonSound();
-        FindObjectOfType<CameraController>().isPanning = false;
-        if (coinController.totalCoins >= sanatizeCost)
+        if (!GetComponent<HelperCanvas>().isAnyCanvasOpened)
         {
-            Vector3 positionOfClick = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            var newPower = Instantiate(sanatizer, positionOfClick - new Vector3(0, 2, 0), Quaternion.identity);
-            coinController.DecreaseCoins(sanatizeCost);
-            sanatizeCost += 10;
-            if(sanatizerText)
+            PlayButtonSound();
+            FindObjectOfType<CameraController>().isPanning = false;
+            if (coinController.totalCoins >= sanatizeCost)
             {
-                sanatizerText.text = sanatizeCost.ToString();
+                Vector3 positionOfClick = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                var newPower = Instantiate(sanatizer, positionOfClick - new Vector3(0, 2, 0), Quaternion.identity);
+                coinController.DecreaseCoins(sanatizeCost);
+                sanatizeCost += 10;
+                if (sanatizerText)
+                {
+                    sanatizerText.text = sanatizeCost.ToString();
+                }
             }
-        }
-        else
-        {
-            FindObjectOfType<CameraController>().isPanning = true;
+            else
+            {
+                FindObjectOfType<CameraController>().isPanning = true;
+            }
         }
     }
 

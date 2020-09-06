@@ -76,9 +76,13 @@ public class PauseManagerScript : MonoBehaviour
 
     public void PauseGame()
     {
-        GetComponent<PowerUpButton>().PlayButtonSound();
-        Time.timeScale = 0f;
-        pauseGameMenu.SetActive(true);
+        if (!FindObjectOfType<HelperCanvas>().isAnyCanvasOpened)
+        {
+            GetComponent<PowerUpButton>().PlayButtonSound();
+            FindObjectOfType<HelperCanvas>().isAnyCanvasOpened = true;
+            Time.timeScale = 0f;
+            pauseGameMenu.SetActive(true);
+        }
     }
 
     public void PlayGameWonSound()
@@ -95,10 +99,12 @@ public class PauseManagerScript : MonoBehaviour
     {
         Time.timeScale = 1f;
         pauseGameMenu.SetActive(false);
+        FindObjectOfType<HelperCanvas>().isAnyCanvasOpened = false;
     }
 
     public void BackToTitle()
     {
+        FindObjectOfType<HelperCanvas>().isAnyCanvasOpened = false;
         SceneManager.LoadScene("Title");
     }
 
